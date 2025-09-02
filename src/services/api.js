@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:5000/api";
+export const BASE_URL = "https://nihonga-backend.onrender.com/api";
 
 /* ------------------------------
    COLLECTION API
