@@ -3,7 +3,7 @@ name: Deploy to Hostinger via FTP
 on:
   push:
     branches:
-      - main  # Change if your default branch is "master"
+      - main
 
 jobs:
   build-and-deploy:
@@ -25,11 +25,11 @@ jobs:
         run: npm run build
 
       - name: Deploy to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@4.3.4  # ✅ Correct format
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}
-          local-dir: ./build   # For React. For Next.js static export use ./out
+          local-dir: ./build
           server-dir: ${{ secrets.REMOTE_DIR }}
