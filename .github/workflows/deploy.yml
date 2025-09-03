@@ -37,12 +37,12 @@ jobs:
           fi
 
       - name: Deploy to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        uses: SamKirkland/FTP-Deploy-Action@4.3.6
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}
-          local-dir: ./dist/          # ✅ Trailing slash required
-          server-dir: ${{ secrets.REMOTE_DIR }}/  # Deploy directly into /public_html
+          local-dir: ./dist/
+          server-dir: ./  # ✅ Changed to deploy to root public_html
           dangerous-clean-slate: true
