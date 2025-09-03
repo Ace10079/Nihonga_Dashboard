@@ -24,6 +24,18 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Verify dist directory exists
+        run: |
+          echo "Checking if dist directory exists:"
+          ls -la
+          if [ -d "dist" ]; then
+            echo "Dist directory found:"
+            ls -la dist/
+          else
+            echo "No dist directory found! Build might have failed."
+            exit 1
+          fi
+
       - name: Deploy to Hostinger
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
@@ -31,5 +43,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}
-          local-dir: ./build/   # ✅ Added trailing slash
+          local-dir: ./dist/   # ✅ Changed from build/ to dist/
           server-dir: ${{ secrets.REMOTE_DIR }}/
