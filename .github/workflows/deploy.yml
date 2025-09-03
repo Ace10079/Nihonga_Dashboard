@@ -25,11 +25,11 @@ jobs:
         run: npm run build
 
       - name: Deploy to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@4.3.4  # ✅ Correct format
+        uses: SamKirkland/FTP-Deploy-Action@4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}
-          local-dir: ./build
-          server-dir: ${{ secrets.REMOTE_DIR }}
+          local-dir: ./build/   # ✅ Added trailing slash
+          server-dir: ${{ secrets.REMOTE_DIR }}/
