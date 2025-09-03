@@ -3,7 +3,7 @@ name: Deploy to Hostinger via FTP
 on:
   push:
     branches:
-      - main  # Deploys only when pushing to main branch
+      - main
 
 jobs:
   build-and-deploy:
@@ -43,6 +43,6 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}
-          local-dir: ./dist          # Vite build folder
-          server-dir: ${{ secrets.REMOTE_DIR }}  # Should point directly to /public_html
-          dangerous-clean-slate: true  # Clears old files before deployment
+          local-dir: ./dist/          # ✅ Trailing slash required
+          server-dir: ${{ secrets.REMOTE_DIR }}/  # Deploy directly into /public_html
+          dangerous-clean-slate: true
