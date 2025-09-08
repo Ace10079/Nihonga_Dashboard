@@ -189,3 +189,27 @@ export async function updateUser(id, data) {
   if (!res.ok) throw new Error("Failed to update user");
   return res.json();
 }
+// Order APIs
+export const orderAPI = {
+  getAll: async () => {
+    const res = await fetch(`${BASE_URL}/orders/getall`); // fetch all orders
+    if (!res.ok) throw new Error("Failed to fetch orders");
+    return res.json();
+  },
+
+  getById: async (orderId) => { // ✅ NEW
+    const res = await fetch(`${BASE_URL}/orders/${orderId}`);
+    if (!res.ok) throw new Error("Failed to fetch order details");
+    return res.json();
+  },
+
+  place: async (payload) => {
+    const res = await fetch(`${BASE_URL}/orders/place`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error("Failed to place order");
+    return res.json();
+  },
+};

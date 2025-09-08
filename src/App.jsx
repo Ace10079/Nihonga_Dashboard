@@ -7,6 +7,7 @@ import Collections from "./pages/Collections";
 import Admin from "./pages/Admin";
 import Stock from "./pages/Stock";
 import Orders from "./pages/Orders";
+import OrderDetails from "./pages/OrderDetails"; // ✅ ADD THIS
 import Products from "./pages/Products";
 import Admins from "./pages/Admins";
 import Users from "./pages/Users";
@@ -29,10 +30,12 @@ function App() {
           <Route path="admin" element={<Admin />} />
           <Route path="stock" element={<Stock />} />
           <Route path="orders" element={<Orders />} />
+
+          {/* ✅ NEW: Order Details Route */}
+          <Route path="orders/:orderId" element={<OrderDetails />} />
           
           <Route path="admins" element={<Admins />} />
-<Route path="users" element={<Users/>} />
-
+          <Route path="users" element={<Users />} />
         </Route>
       </Routes>
     </Router>
