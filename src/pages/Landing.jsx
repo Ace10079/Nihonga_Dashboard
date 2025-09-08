@@ -7,7 +7,7 @@ import {
   getProducts,
 } from "../services/api";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://nihonga-backend.onrender.com";
 
 // Landing API endpoints
 async function getLanding() {
