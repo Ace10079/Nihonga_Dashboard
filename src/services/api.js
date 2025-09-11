@@ -1,4 +1,5 @@
 export const BASE_URL = "https://nihonga-backend.onrender.com/api";
+//https://nihonga-backend.onrender.com
 
 /* ------------------------------
    COLLECTION API

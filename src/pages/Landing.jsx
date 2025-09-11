@@ -8,6 +8,8 @@ import {
 } from "../services/api";
 
 const BASE_URL = "https://nihonga-backend.onrender.com";
+//https://nihonga-backend.onrender.com
+//http://localhost:5000
 
 // Landing API endpoints
 async function getLanding() {
