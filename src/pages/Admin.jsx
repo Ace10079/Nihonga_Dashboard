@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiBox, FiUsers, FiBarChart2, FiShoppingCart, FiShield } from "react-icons/fi";
-import { getUsers, getAdmins, getProducts } from "../services/api";
+import { FiBox, FiUsers, FiBarChart2, FiShoppingCart, FiHeart } from "react-icons/fi";
+import { getUsers, getAdmins, getProducts, getAllCarts } from "../services/api";
 
 const Admin = () => {
   const navigate = useNavigate();
   const [stats, setStats] = useState({
     totalProducts: 0,
-    totalOrders: 0, // Can be updated once orders API is available
+    totalOrders: 0, // Can update later
     totalUsers: 0,
     totalAdmins: 0,
-    revenue: "$0", // Placeholder until revenue API is implemented
+    revenue: "$0",
+    totalCartItems: 0,
+    totalWishlistItems: 0,
   });
 
   useEffect(() => {
@@ -19,18 +21,27 @@ const Admin = () => {
 
   const fetchStats = async () => {
     try {
-      const [usersData, adminsData, productsData] = await Promise.all([
+      const [usersData, adminsData, productsData, cartsData] = await Promise.all([
         getUsers(),
         getAdmins(),
         getProducts(),
+        getAllCarts(), // Fetch all carts for stats
       ]);
+
+      let cartCount = 0;
+      cartsData.forEach(cart => (cartCount += cart.items.length));
+
+      let wishlistCount = 0;
+      usersData.forEach(user => (wishlistCount += user.wishlist?.length || 0));
 
       setStats({
         totalProducts: productsData.length || 0,
-        totalOrders: 0, // Replace with getOrders() if available
+        totalOrders: 0,
         totalUsers: usersData.length || 0,
         totalAdmins: adminsData.length || 0,
-        revenue: "$12,340", // Replace with actual API if needed
+        revenue: "$12,340",
+        totalCartItems: cartCount,
+        totalWishlistItems: wishlistCount,
       });
     } catch (err) {
       console.error("Failed to fetch stats:", err);
@@ -42,14 +53,17 @@ const Admin = () => {
     { title: "Total Orders", value: stats.totalOrders, icon: <FiShoppingCart className="text-green-600" /> },
     { title: "Total Users", value: stats.totalUsers, icon: <FiUsers className="text-purple-600" /> },
     { title: "Revenue", value: stats.revenue, icon: <FiBarChart2 className="text-yellow-600" /> },
+    { title: "Cart Items", value: stats.totalCartItems, icon: <FiShoppingCart className="text-pink-600" /> },
+    { title: "Wishlist Items", value: stats.totalWishlistItems, icon: <FiHeart className="text-red-600" /> },
   ];
+
   const managementCards = [
     { title: "Manage Admins", description: `Currently ${stats.totalAdmins} admins active.`, path: "/dashboard/admins" },
     { title: "View Orders", description: "See and manage all orders.", path: "/dashboard/orders" },
     { title: "View Users", description: `Currently ${stats.totalUsers} users registered.`, path: "/dashboard/users" },
+    { title: "Cart Analysis", description: "View products added to carts by users.", path: "/dashboard/carts" },
+    { title: "Wishlist Analysis", description: "View products added to wishlists by users.", path: "/dashboard/wishlists" },
   ];
-  
-  
 
   return (
     <div className="p-6 space-y-8">

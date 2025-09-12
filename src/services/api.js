@@ -1,5 +1,6 @@
 export const BASE_URL = "https://nihonga-backend.onrender.com/api";
 //https://nihonga-backend.onrender.com
+//http://localhost:5000
 
 /* ------------------------------
    COLLECTION API
@@ -190,15 +191,31 @@ export async function updateUser(id, data) {
   if (!res.ok) throw new Error("Failed to update user");
   return res.json();
 }
+
+
+// Get all carts
+export async function getAllCarts() {
+  const res = await fetch(`${BASE_URL}/cart/all`); // Need backend route
+  if (!res.ok) throw new Error("Failed to fetch all carts");
+  return res.json();
+}
+
+// Get wishlist for all users
+export async function getAllUsersWishlists() {
+  const res = await fetch(`${BASE_URL}/user/getall`); // User API already includes wishlist
+  if (!res.ok) throw new Error("Failed to fetch wishlists");
+  return res.json();
+}
+
 // Order APIs
 export const orderAPI = {
   getAll: async () => {
-    const res = await fetch(`${BASE_URL}/orders/getall`); // fetch all orders
+    const res = await fetch(`${BASE_URL}/orders/getall`);
     if (!res.ok) throw new Error("Failed to fetch orders");
     return res.json();
   },
 
-  getById: async (orderId) => { // ✅ NEW
+  getById: async (orderId) => {
     const res = await fetch(`${BASE_URL}/orders/${orderId}`);
     if (!res.ok) throw new Error("Failed to fetch order details");
     return res.json();
@@ -211,6 +228,28 @@ export const orderAPI = {
       body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error("Failed to place order");
+    return res.json();
+  },
+
+  updateStatus: async (orderId, status) => {
+    const res = await fetch(`${BASE_URL}/orders/${orderId}/status`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
+    if (!res.ok) throw new Error("Failed to update status");
+    return res.json();
+  },
+
+  cancel: async (orderId) => {
+    const res = await fetch(`${BASE_URL}/orders/${orderId}/cancel`, { method: "PUT" });
+    if (!res.ok) throw new Error("Failed to cancel order");
+    return res.json();
+  },
+
+  refund: async (orderId) => {
+    const res = await fetch(`${BASE_URL}/orders/${orderId}/refund`, { method: "PUT" });
+    if (!res.ok) throw new Error("Failed to refund order");
     return res.json();
   },
 };

@@ -11,6 +11,8 @@ import OrderDetails from "./pages/OrderDetails"; // ✅ ADD THIS
 import Products from "./pages/Products";
 import Admins from "./pages/Admins";
 import Users from "./pages/Users";
+import CartAnalysis from "./pages/CartAnalysis";
+import WishlistAnalysis from "./pages/WishlistAnalysis";
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
           
           <Route path="admins" element={<Admins />} />
           <Route path="users" element={<Users />} />
+          <Route path="carts" element={<CartAnalysis/>} />
+          <Route path="wishlists" element={<WishlistAnalysis/>} />
         </Route>
       </Routes>
     </Router>
